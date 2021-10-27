@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 const Start: React.FC<Props> = (props: Props) => {
     const classes = useStyles();
     const { handleSubmit } = useForm();
-    const { modes, squaresHovered } = useAppSelector((store: RootState) => store.modeReducer);
+    const { modes, squaresHovered, error } = useAppSelector((store: RootState) => store.modeReducer);
     const dispatch = useAppDispatch();
     const [mode, setMode] = useState<string>('');
     const [choose, setChoose] = useState<boolean>(false);
@@ -71,6 +71,7 @@ const Start: React.FC<Props> = (props: Props) => {
                     </FormControl>
                     <Button type="submit" disabled={!choose} variant="contained">Start</Button>
                 </form>
+                <h2>{error}</h2>
                 <SquareBox />
             </Stack>
             <List squaresArray={squaresHovered} />

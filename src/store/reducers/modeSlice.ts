@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IModes, IMode, ISquaresArray } from "../../models/IMode";
+import { fetchModes } from "./actionCreators";
 
 interface modeState {
     modes: IModes;
@@ -33,24 +34,26 @@ export const modeSlice = createSlice({
     name: 'modes',
     initialState,
     reducers: {
-        modesFetching(state) {
-            state.isLoading = true;
-        },
-        modesFetchingSuccess(state, action: PayloadAction<IModes>) {
-            state.isLoading = false;
-            state.error = '';
-            state.modes = action.payload;
-        },
-        modesFetchingError(state, action: PayloadAction<string>) {
-            state.isLoading = false;
-            state.error = action.payload;
-        },
         setValue(state, action: PayloadAction<IMode>) {
             state.fieldAmount = action.payload;
         },
         setSquares(state, action: PayloadAction<ISquaresArray[]>) {
             state.squaresHovered = action.payload;
         }
+    },
+    extraReducers: {
+        [fetchModes.pending.type]: (state) => {
+            state.isLoading = true;
+        },
+        [fetchModes.fulfilled.type]: (state, action: PayloadAction<IModes>) => {
+            state.isLoading = false;
+            state.error = '';
+            state.modes = action.payload;
+        },
+        [fetchModes.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
     }
 });
 

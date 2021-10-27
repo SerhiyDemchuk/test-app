@@ -21,7 +21,6 @@ function CircularIndeterminate() {
 }
 
 const App: React.FC<Props> = (props: Props) => {
-    
     const { isLoading } = useAppSelector((store: RootState) => store.modeReducer);
     const dispatch = useAppDispatch();
     
